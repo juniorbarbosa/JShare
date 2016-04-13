@@ -1,4 +1,4 @@
-package br.univel;
+package br.univel.client;
 
 import java.net.URL;
 import java.util.ResourceBundle;
