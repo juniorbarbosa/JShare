@@ -42,9 +42,6 @@
 						<Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
 					</VBox.margin>
 				</HBox>
-				<BorderPane.margin>
-					<Insets />
-				</BorderPane.margin>
 			</VBox>
 		</top>
 		<center>
