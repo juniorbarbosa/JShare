@@ -12,14 +12,21 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.control.Label?>
 
-<StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0"	prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.40" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.univel.client.MainClientController">
+<StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.40" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.univel.client.MainClientController">
 	<stylesheets>
 		<URL value="@/br/univel/styles/main.css" />
 	</stylesheets>
-	<BorderPane prefHeight="200.0" prefWidth="200.0">
+	<BorderPane>
 		<top>
 			<VBox>
-				<HBox>
+				<HBox alignment="CENTER_LEFT">
+					<Label text="Nome: " />
+					<TextField fx:id="nomeCliente" prefWidth="500" />
+					<VBox.margin>
+						<Insets left="5.0" right="5.0" top="5.0" />
+					</VBox.margin>
+				</HBox>
+				<HBox alignment="CENTER_LEFT">
 					<Label text="Ip do servidor: " />
 					<TextField fx:id="ipServidor" prefWidth="200.0" />
 					<Label text="Porta do servidor: ">
