@@ -6,11 +6,11 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.fxml.FXMLLoader;
 
-public class Main extends Application {
+public class MainClient extends Application {
 	@Override
 	public void start(Stage primaryStage) {
 		try {
-			Parent root = FXMLLoader.load(getClass().getResource("Main.fxml"));
+			Parent root = FXMLLoader.load(getClass().getResource("MainClient.fxml"));
 			Scene scene = new Scene(root, 400, 400);
 			primaryStage.setScene(scene);
 			primaryStage.setMaximized(true);

@@ -7,7 +7,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.TextField;
 
 
-public class MainController implements Initializable {
+public class MainClientController implements Initializable {
 	
 	@FXML
 	private TextField ipServidor, portaServidor;
