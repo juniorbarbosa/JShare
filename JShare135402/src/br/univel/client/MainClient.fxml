@@ -11,6 +11,7 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.cell.PropertyValueFactory?>
 
 <StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.40" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.univel.client.MainClientController">
 	<stylesheets>
@@ -35,12 +36,12 @@
 						</padding>
 					</Label>
 					<TextField fx:id="portaServidor" prefWidth="100.0" />
-					<Button text="Conectar">
+					<Button text="Conectar" onAction="#conectar">
 						<HBox.margin>
 							<Insets left="8.0" right="8.0" />
 						</HBox.margin>
 					</Button>
-					<Button text="Desconectar">
+					<Button text="Desconectar" onAction="#desconectar">
 						<HBox.margin>
 							<Insets right="8.0" />
 						</HBox.margin>
@@ -54,8 +55,16 @@
 		<center>
 			<TableView fx:id="table" prefHeight="200.0" prefWidth="200.0">
 				<columns>
-					<TableColumn prefWidth="${table.width * 0.50}" text="Tamanho" />
-					<TableColumn prefWidth="${table.width * 0.495}" text="Nome" />
+					<TableColumn prefWidth="${table.width * 0.25}" text="Tamanho">
+						<cellValueFactory>	
+							<PropertyValueFactory property="tamanho" />
+						</cellValueFactory>
+					</TableColumn>
+					<TableColumn prefWidth="${table.width * 0.745}" text="Nome">
+					<cellValueFactory>	
+							<PropertyValueFactory property="nome"/>
+						</cellValueFactory>
+					</TableColumn>
 				</columns>
 				<BorderPane.margin>
 					<Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
