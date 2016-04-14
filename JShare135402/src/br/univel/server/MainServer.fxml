@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import java.net.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.control.Label?>
+
+<StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.40" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.univel.server.MainServerController">
+	<stylesheets>
+		<URL value="@/br/univel/styles/main.css" />
+	</stylesheets>
+	<BorderPane>
+		<top>
+			<VBox>
+				<HBox>
+					<Label text="IP:" />
+					<ComboBox prefWidth="150.0">
+						<HBox.margin>
+							<Insets left="23.0" />
+						</HBox.margin>
+					</ComboBox>
+				</HBox>
+				<HBox>
+					<Label text="Porta:" />
+					<TextField fx:id="txtPorta">
+						<HBox.margin>
+							<Insets left="5.0" />
+						</HBox.margin>
+					</TextField>
+					<Button fx:id="btStart" onAction="#startService" text="Iniciar serviço">
+						<HBox.margin>
+							<Insets left="10.0" />
+						</HBox.margin>
+					</Button>
+					<Button fx:id="btStop" onAction="#stopService" text="Parar serviço">
+						<HBox.margin>
+							<Insets left="10.0" />
+						</HBox.margin>
+					</Button>
+					<VBox.margin>
+						<Insets top="5.0" />
+					</VBox.margin>
+				</HBox>
+				<BorderPane.margin>
+					<Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+				</BorderPane.margin>
+			</VBox>
+		</top>
+		<center>
+			<ScrollPane fx:id="scrollPane">
+				<content>
+					<TextArea fx:id="textArea" prefHeight="${scrollPane.height * 0.99}" prefWidth="${scrollPane.width * 0.99}" />
+				</content>
+				<BorderPane.margin>
+					<Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+				</BorderPane.margin>
+			</ScrollPane>
+		</center>
+	</BorderPane>
+</StackPane>
