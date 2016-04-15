@@ -9,7 +9,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.ResourceBundle;
-
 import br.dagostini.jshare.comum.pojos.Arquivo;
 import br.dagostini.jshare.comun.Cliente;
 import br.dagostini.jshare.comun.IServer;
@@ -23,7 +22,7 @@ import javafx.scene.control.TextArea;
 public class MainServerController implements Initializable, IServer {
 
 	@FXML
-	private ComboBox cbxIp;
+	private ComboBox<String> cbxIp;
 
 	@FXML
 	private TextField txtPorta;
@@ -40,7 +39,11 @@ public class MainServerController implements Initializable, IServer {
 
 	@Override
 	public void initialize(URL url, ResourceBundle rb) {
+		initIpsComboBox();
+	}
 
+	private void initIpsComboBox() {
+		cbxIp.setValue("127.0.0.1");
 	}
 
 	@FXML
