@@ -63,7 +63,7 @@ public class MainServerController implements Initializable, IServer {
 			registry = LocateRegistry.createRegistry(numeroPorta);
 			registry.rebind(IServer.NOME_SERVICO, servidor);
 
-			textArea.appendText("Serviço iniciado.\n");
+			textArea.appendText("SERVIDOR INICIADO.\n");
 
 			cbxIp.setDisable(true);
 			txtPorta.setDisable(true);
@@ -78,7 +78,23 @@ public class MainServerController implements Initializable, IServer {
 
 	@FXML
 	private void stopService() {
+		textArea.appendText("DESCONECTANDO TODOS OS CLIENTES.\n");
 
+		try {
+			UnicastRemoteObject.unexportObject(this, true);
+			UnicastRemoteObject.unexportObject(registry, true);
+
+			cbxIp.setDisable(false);
+			txtPorta.setDisable(false);
+			btStart.setDisable(false);
+
+			btStop.setDisable(true);
+
+			textArea.appendText("SERVIDOR DESLIGADO.\n");
+
+		} catch (RemoteException e) {
+			e.printStackTrace();
+		}
 	}
 
 	@Override

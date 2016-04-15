@@ -39,7 +39,7 @@
 							<Insets left="10.0" />
 						</HBox.margin>
 					</Button>
-					<Button fx:id="btStop" onAction="#stopService" text="Parar serviço">
+					<Button fx:id="btStop" onAction="#stopService" text="Parar serviço" disable="true">
 						<HBox.margin>
 							<Insets left="10.0" />
 						</HBox.margin>
