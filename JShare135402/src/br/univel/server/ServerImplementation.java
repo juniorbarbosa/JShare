@@ -1,6 +1,7 @@
 package br.univel.server;
 
 import java.rmi.RemoteException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -10,16 +11,17 @@ import br.dagostini.jshare.comun.IServer;
 
 public class ServerImplementation implements IServer {
 
+	private List<Cliente> mapClientes = new ArrayList<>();
+
 	@Override
 	public void registrarCliente(Cliente c) throws RemoteException {
-		// TODO Auto-generated method stub
-		
+		mapClientes.add(c);
 	}
 
 	@Override
 	public void publicarListaArquivos(Cliente c, List<Arquivo> lista) throws RemoteException {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
@@ -36,8 +38,7 @@ public class ServerImplementation implements IServer {
 
 	@Override
 	public void desconectar(Cliente c) throws RemoteException {
-		// TODO Auto-generated method stub
-		
+		mapClientes.remove(c);
 	}
 
 }

@@ -21,7 +21,7 @@
 			<VBox>
 				<HBox>
 					<Label text="IP:" />
-					<ComboBox prefWidth="150.0">
+					<ComboBox fx:id="cbxIp" prefWidth="150.0">
 						<HBox.margin>
 							<Insets left="23.0" />
 						</HBox.margin>
