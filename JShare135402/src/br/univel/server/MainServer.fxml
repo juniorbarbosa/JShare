@@ -21,11 +21,11 @@
 			<VBox>
 				<HBox>
 					<Label text="IP:" />
-					<ComboBox fx:id="cbxIp" prefWidth="150.0">
+					<TextField prefWidth="150.0" text="127.0.0.1" disable="true">
 						<HBox.margin>
 							<Insets left="23.0" />
 						</HBox.margin>
-					</ComboBox>
+					</TextField>
 				</HBox>
 				<HBox>
 					<Label text="Porta:" />

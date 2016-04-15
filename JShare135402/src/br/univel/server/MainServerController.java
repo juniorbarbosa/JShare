@@ -22,9 +22,6 @@ import javafx.scene.control.TextArea;
 public class MainServerController implements Initializable, IServer {
 
 	@FXML
-	private ComboBox<String> cbxIp;
-
-	@FXML
 	private TextField txtPorta;
 
 	@FXML
@@ -39,11 +36,7 @@ public class MainServerController implements Initializable, IServer {
 
 	@Override
 	public void initialize(URL url, ResourceBundle rb) {
-		initIpsComboBox();
-	}
 
-	private void initIpsComboBox() {
-		cbxIp.setValue("127.0.0.1");
 	}
 
 	@FXML
@@ -68,7 +61,6 @@ public class MainServerController implements Initializable, IServer {
 
 			textArea.appendText("SERVIDOR INICIADO.\n");
 
-			cbxIp.setDisable(true);
 			txtPorta.setDisable(true);
 			btStart.setDisable(true);
 			btStop.setDisable(false);
@@ -80,14 +72,13 @@ public class MainServerController implements Initializable, IServer {
 	}
 
 	@FXML
-	private void stopService() {
+	protected void stopService() {
 		textArea.appendText("DESCONECTANDO TODOS OS CLIENTES.\n");
 
 		try {
 			UnicastRemoteObject.unexportObject(this, true);
 			UnicastRemoteObject.unexportObject(registry, true);
 
-			cbxIp.setDisable(false);
 			txtPorta.setDisable(false);
 			btStart.setDisable(false);
 
