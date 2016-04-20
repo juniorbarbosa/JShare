@@ -11,35 +11,37 @@ public class Arquivo implements Serializable {
 
 	private static final long serialVersionUID = 8077295408159335912L;
 
-	private final StringProperty nome = new SimpleStringProperty();
-	private final LongProperty tamanho = new SimpleLongProperty();
+	private String nome;
+	private long tamanho;
+	private ArquivoFX arquivoFX;
 
 	public String getNome() {
-		return nome.get();
-	}
-
-	public void setNome(String value) {
-		nome.set(value);
-	}
-
-	public StringProperty nomeProperty() {
 		return nome;
 	}
 
+	public void setNome(String nome) {
+		this.nome = nome;
+		if (getArquivoFX() != null) {
+			getArquivoFX().setNome(nome);
+		}
+	}
+
 	public long getTamanho() {
-		return tamanho.get();
-	}
-
-	public void setTamanho(long value) {
-		tamanho.set(value);
-	}
-
-	public LongProperty tamanhoProperty() {
 		return tamanho;
 	}
 
-	@Override
-	public String toString() {
-		return nome + " - " + tamanho;
+	public void setTamanho(long tamanho) {
+		this.tamanho = tamanho;
+		if (getArquivoFX() != null) {
+			getArquivoFX().setTamanho(tamanho);
+		}
+	}
+
+	public ArquivoFX getArquivoFX() {
+		return arquivoFX;
+	}
+
+	public void setArquivoFX(ArquivoFX arquivoFX) {
+		this.arquivoFX = arquivoFX;
 	}
 }
