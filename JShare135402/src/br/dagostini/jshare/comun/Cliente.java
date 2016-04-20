@@ -17,6 +17,9 @@ public class Cliente implements Serializable {
 
 	public void setNome(String nome) {
 		this.nome = nome;
+		if (getClienteFX() != null) {
+			getClienteFX().setNome(nome);
+		}
 	}
 
 	public String getIp() {
@@ -25,6 +28,9 @@ public class Cliente implements Serializable {
 
 	public void setIp(String ip) {
 		this.ip = ip;
+		if (getClienteFX() != null) {
+			getClienteFX().setIp(ip);
+		}
 	}
 
 	public int getPorta() {
@@ -33,6 +39,9 @@ public class Cliente implements Serializable {
 
 	public void setPorta(int porta) {
 		this.porta = porta;
+		if (getClienteFX() != null) {
+			getClienteFX().setPorta(porta);
+		}
 	}
 
 	public ClienteFX getClienteFX() {
