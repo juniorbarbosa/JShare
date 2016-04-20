@@ -6,6 +6,7 @@ import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
+import javafx.beans.value.ChangeListener;
 
 public class ClienteFX {
 
@@ -19,6 +20,23 @@ public class ClienteFX {
 			throw new IllegalArgumentException("O cliente deve ser informado");
 		}
 		this.cliente.set(cliente);
+		initClienteFX();
+	}
+
+	private void initClienteFX() {
+		nomeProperty().addListener((ChangeListener<String>) (observable, oldValue, newValue) -> {
+			getCliente().setNome(newValue);
+		});
+		ipProperty().addListener((ChangeListener<String>) (observable, oldValue, newValue) -> {
+			getCliente().setIp(newValue);
+		});
+		portaProperty().addListener((ChangeListener<Number>) (observable, oldValue, newValue) -> {
+			if (newValue == null) {
+				getCliente().setPorta(-1);
+			} else {
+				getCliente().setPorta(newValue.intValue());
+			}
+		});
 	}
 
 	public Cliente getCliente() {
