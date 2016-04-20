@@ -23,6 +23,9 @@ public class MainClientController implements Initializable {
 	@FXML
 	private TableView<Arquivo> table;
 
+	private IServer servidor;
+	private Registry registry;
+
 	@Override
 	public void initialize(URL url, ResourceBundle rb) {
 
@@ -38,11 +41,11 @@ public class MainClientController implements Initializable {
 		ClienteFX clienteFX = new ClienteFX(new Cliente());
 		clienteFX.setNome(nome);
 
-		Registry registry;
 		try {
 			registry = LocateRegistry.getRegistry(ip, numeroPorta);
 			IServer servico = (IServer) registry.lookup(IServer.NOME_SERVICO);
 			servico.registrarCliente(clienteFX.getCliente());
+			servidor = servico;
 		} catch (RemoteException e) {
 			e.printStackTrace();
 		} catch (NotBoundException e) {
@@ -53,7 +56,22 @@ public class MainClientController implements Initializable {
 
 	@FXML
 	private void desconectar() {
+		String nome = nomeCliente.getText().trim();
 
+		ClienteFX clienteFx = new ClienteFX(new Cliente());
+		clienteFx.setNome(nome);
+
+		try {
+			if (servidor != null) {
+				servidor.desconectar(clienteFx.getCliente());
+				servidor = null;
+			}
+		} catch (RemoteException e) {
+			e.printStackTrace();
+		}
+
+		registry = null;
+		servidor = null;
 	}
 
 	@FXML

@@ -30,7 +30,7 @@ public class MainServerController implements Initializable, IServer {
 	@FXML
 	private Button btStart, btStop;
 
-	private List<Cliente> mapClientes = new ArrayList<>();
+	private List<Cliente> listClientes = new ArrayList<>();
 	private IServer servidor;
 	private Registry registry;
 
@@ -93,7 +93,8 @@ public class MainServerController implements Initializable, IServer {
 
 	@Override
 	public void registrarCliente(Cliente c) throws RemoteException {
-		mapClientes.add(c);
+		listClientes.add(c);
+		textArea.appendText("CLIENTE " + c.getNome().toUpperCase() + " CONECTADO.\n");
 	}
 
 	@Override
@@ -116,7 +117,8 @@ public class MainServerController implements Initializable, IServer {
 
 	@Override
 	public void desconectar(Cliente c) throws RemoteException {
-		mapClientes.remove(c);
+		listClientes.remove(c);
+		textArea.appendText("CLIENTE " + c.getNome().toUpperCase() + " DESCONECTADO.\n");
 	}
 
 }
