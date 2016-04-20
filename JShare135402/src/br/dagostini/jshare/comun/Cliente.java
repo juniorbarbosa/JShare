@@ -1,5 +1,6 @@
 package br.dagostini.jshare.comun;
 
+import java.beans.Transient;
 import java.io.Serializable;
 
 public class Cliente implements Serializable {
@@ -44,10 +45,12 @@ public class Cliente implements Serializable {
 		}
 	}
 
+	@Transient
 	public ClienteFX getClienteFX() {
 		return clienteFX;
 	}
 
+	@Transient
 	public void setClienteFX(ClienteFX clienteFX) {
 		this.clienteFX = clienteFX;
 	}
