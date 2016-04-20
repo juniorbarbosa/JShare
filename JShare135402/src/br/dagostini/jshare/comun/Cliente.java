@@ -9,6 +9,7 @@ public class Cliente implements Serializable {
 	private String nome;
 	private String ip;
 	private int porta;
+	private ClienteFX clienteFX;
 
 	public String getNome() {
 		return nome;
@@ -32,6 +33,14 @@ public class Cliente implements Serializable {
 
 	public void setPorta(int porta) {
 		this.porta = porta;
+	}
+
+	public ClienteFX getClienteFX() {
+		return clienteFX;
+	}
+
+	public void setClienteFX(ClienteFX clienteFX) {
+		this.clienteFX = clienteFX;
 	}
 
 }
