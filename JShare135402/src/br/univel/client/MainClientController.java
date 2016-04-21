@@ -1,6 +1,11 @@
 package br.univel.client;
 
+import java.io.File;
+import java.io.IOException;
 import java.net.URL;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.nio.file.StandardOpenOption;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
@@ -40,7 +45,9 @@ public class MainClientController implements Initializable {
 
 	@Override
 	public void initialize(URL url, ResourceBundle rb) {
-
+		nomeCliente.setText("zero");
+		ipServidor.setText("127.0.0.1");
+		portaServidor.setText("1818");
 	}
 
 	@FXML
@@ -108,7 +115,37 @@ public class MainClientController implements Initializable {
 
 	@FXML
 	private void download() {
-
+		System.out.println("1");
+		try {
+			System.out.println("2");
+			
+			ArquivoFX arquivo = table.getSelectionModel().getSelectedItem();
+			
+			File arquivoFx = new File(arquivo.getNome());
+			
+			System.out.println("arquivo: " + arquivoFx.getName());
+			
+			System.out.println("3" + arquivo.getNome());
+			
+			File file = new File("C:\\Users\\Junior\\git\\JShare\\JShare135402\\download\\" + arquivoFx.getName());
+			
+			System.out.println("4" + arquivo.getNome());
+			
+			System.out.println("5" + arquivo.getNome());
+			
+			// ate aqui vem
+			
+			byte[] arquivobyte = servidor.baixarArquivo(arquivo.getArquivo());
+			
+			System.out.println("6" + arquivo.getNome());
+			
+			Files.write(Paths.get(file.getPath()), arquivobyte, StandardOpenOption.CREATE);
+			
+			System.out.println("7" + arquivo.getNome());
+			
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 
 	private void listaArquivosTabela() {
