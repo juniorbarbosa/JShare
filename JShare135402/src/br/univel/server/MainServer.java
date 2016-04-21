@@ -14,6 +14,7 @@ public class MainServer extends Application {
 			Scene scene = new Scene(root, 400, 300);
 			primaryStage.setScene(scene);
 			primaryStage.show();
+			primaryStage.setTitle("Servidor");
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
