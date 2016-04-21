@@ -1,11 +1,13 @@
 package br.univel.server;
 
+import java.io.File;
 import java.net.URL;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.ResourceBundle;
@@ -33,6 +35,8 @@ public class MainServerController implements Initializable, IServer {
 	private List<Cliente> listClientes = new ArrayList<>();
 	private IServer servidor;
 	private Registry registry;
+
+	private Map<Cliente, List<Arquivo>> mapArquivos = new HashMap<>();
 
 	@Override
 	public void initialize(URL url, ResourceBundle rb) {
@@ -99,7 +103,19 @@ public class MainServerController implements Initializable, IServer {
 
 	@Override
 	public void publicarListaArquivos(Cliente c, List<Arquivo> lista) throws RemoteException {
-		// TODO Auto-generated method stub
+		File diretorioUpload = new File("C:\\Users\\Junior\\git\\JShare\\JShare135402\\upload");
+		for (File file : diretorioUpload.listFiles()) {
+			if (file.isFile()) {
+				Arquivo arquivo = new Arquivo();
+				arquivo.setNome(file.getName());
+				arquivo.setTamanho(file.length());
+				lista.add(arquivo);
+				mapArquivos.put(c, lista);
+			}
+		}
+		for (Arquivo arquivo : lista) {
+			textArea.appendText("arquivo: " + arquivo.getNome() + ", tamanho: " + arquivo.getTamanho() + "\n");
+		}
 
 	}
 
