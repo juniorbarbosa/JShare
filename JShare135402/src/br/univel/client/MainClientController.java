@@ -45,6 +45,7 @@ public class MainClientController implements Initializable {
 
 	@FXML
 	private void conectar() {
+		table.getItems().clear();
 		String nome = nomeCliente.getText().trim();
 		String ip = ipServidor.getText().trim();
 		String porta = portaServidor.getText().trim();
@@ -78,6 +79,8 @@ public class MainClientController implements Initializable {
 
 	@FXML
 	private void desconectar() {
+		table.getItems().clear();
+
 		String nome = nomeCliente.getText().trim();
 
 		ClienteFX clienteFx = new ClienteFX(new Cliente());
@@ -100,6 +103,7 @@ public class MainClientController implements Initializable {
 		portaServidor.setDisable(false);
 		btConectar.setDisable(false);
 		btDesconectar.setDisable(true);
+
 	}
 
 	@FXML

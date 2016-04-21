@@ -32,10 +32,10 @@ public class MainServerController implements Initializable, IServer {
 	@FXML
 	private Button btStart, btStop;
 
-	private List<Cliente> listClientes = new ArrayList<>();
 	private IServer servidor;
 	private Registry registry;
 
+	private List<Cliente> listClientes = new ArrayList<>();
 	private Map<Cliente, List<Arquivo>> mapArquivos = new HashMap<>();
 
 	@Override
@@ -78,6 +78,7 @@ public class MainServerController implements Initializable, IServer {
 	@FXML
 	protected void stopService() {
 		textArea.appendText("DESCONECTANDO TODOS OS CLIENTES.\n");
+		mapArquivos.clear();
 
 		try {
 			UnicastRemoteObject.unexportObject(this, true);
