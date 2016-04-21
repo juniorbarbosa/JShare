@@ -36,12 +36,12 @@
 						</padding>
 					</Label>
 					<TextField fx:id="portaServidor" prefWidth="100.0" />
-					<Button text="Conectar" onAction="#conectar">
+					<Button fx:id="btConectar" text="Conectar" onAction="#conectar">
 						<HBox.margin>
 							<Insets left="8.0" right="8.0" />
 						</HBox.margin>
 					</Button>
-					<Button text="Desconectar" onAction="#desconectar">
+					<Button fx:id="btDesconectar" text="Desconectar" onAction="#desconectar" disable="true">
 						<HBox.margin>
 							<Insets right="8.0" />
 						</HBox.margin>
