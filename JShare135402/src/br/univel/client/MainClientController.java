@@ -5,6 +5,8 @@ import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.ResourceBundle;
 import br.dagostini.jshare.comum.pojos.Arquivo;
 import br.dagostini.jshare.comun.Cliente;
@@ -30,6 +32,8 @@ public class MainClientController implements Initializable {
 	private IServer servidor;
 	private Registry registry;
 
+	private List<Arquivo> listaArquivoUpload = new ArrayList<>();
+
 	@Override
 	public void initialize(URL url, ResourceBundle rb) {
 
@@ -49,6 +53,7 @@ public class MainClientController implements Initializable {
 			registry = LocateRegistry.getRegistry(ip, numeroPorta);
 			IServer servico = (IServer) registry.lookup(IServer.NOME_SERVICO);
 			servico.registrarCliente(clienteFX.getCliente());
+			servico.publicarListaArquivos(clienteFX.getCliente(), listaArquivoUpload);
 			servidor = servico;
 		} catch (RemoteException e) {
 			e.printStackTrace();
