@@ -6,9 +6,12 @@ import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.ResourceBundle;
 import br.dagostini.jshare.comum.pojos.Arquivo;
+import br.dagostini.jshare.comum.pojos.ArquivoFX;
 import br.dagostini.jshare.comun.Cliente;
 import br.dagostini.jshare.comun.ClienteFX;
 import br.dagostini.jshare.comun.IServer;
@@ -27,12 +30,13 @@ public class MainClientController implements Initializable {
 	private Button btConectar, btDesconectar;
 
 	@FXML
-	private TableView<Arquivo> table;
+	private TableView<ArquivoFX> table;
 
 	private IServer servidor;
 	private Registry registry;
 
 	private List<Arquivo> listaArquivoUpload = new ArrayList<>();
+	private Map<Cliente, List<Arquivo>> mapArquivos = new HashMap<>();
 
 	@Override
 	public void initialize(URL url, ResourceBundle rb) {
@@ -54,12 +58,15 @@ public class MainClientController implements Initializable {
 			IServer servico = (IServer) registry.lookup(IServer.NOME_SERVICO);
 			servico.registrarCliente(clienteFX.getCliente());
 			servico.publicarListaArquivos(clienteFX.getCliente(), listaArquivoUpload);
+			mapArquivos = servico.procurarArquivo("");
 			servidor = servico;
 		} catch (RemoteException e) {
 			e.printStackTrace();
 		} catch (NotBoundException e) {
 			e.printStackTrace();
 		}
+
+		listaArquivosTabela();
 
 		nomeCliente.setDisable(true);
 		ipServidor.setDisable(true);
@@ -97,6 +104,20 @@ public class MainClientController implements Initializable {
 
 	@FXML
 	private void download() {
+
+	}
+
+	private void listaArquivosTabela() {
+		for (Map.Entry<Cliente, List<Arquivo>> entry : mapArquivos.entrySet()) {
+			Cliente cliente = entry.getKey();
+			List<Arquivo> arquivos = entry.getValue();
+			for (Arquivo arq : arquivos) {
+				ArquivoFX arquivoFX = new ArquivoFX(new Arquivo());
+				arquivoFX.setNome(arq.getNome());
+				arquivoFX.setTamanho(arq.getTamanho());
+				table.getItems().add(arquivoFX);
+			}
+		}
 
 	}
 
