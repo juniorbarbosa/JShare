@@ -121,8 +121,7 @@ public class MainServerController implements Initializable, IServer {
 
 	@Override
 	public Map<Cliente, List<Arquivo>> procurarArquivo(String nome) throws RemoteException {
-		// TODO Auto-generated method stub
-		return null;
+		return mapArquivos;
 	}
 
 	@Override
