@@ -1,7 +1,11 @@
 package br.univel.server;
 
 import java.io.File;
+import java.io.IOException;
 import java.net.URL;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
@@ -18,7 +22,6 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextArea;
 
 public class MainServerController implements Initializable, IServer {
@@ -40,7 +43,7 @@ public class MainServerController implements Initializable, IServer {
 
 	@Override
 	public void initialize(URL url, ResourceBundle rb) {
-
+		txtPorta.setText("1818");
 	}
 
 	@FXML
@@ -127,8 +130,32 @@ public class MainServerController implements Initializable, IServer {
 
 	@Override
 	public byte[] baixarArquivo(Arquivo arq) throws RemoteException {
-		// TODO Auto-generated method stub
-		return null;
+
+		System.out.println("1" + arq.getNome());
+
+		File file = new File("C:\\Users\\Junior\\git\\JShare\\JShare135402\\upload\\" + arq.getNome());
+
+		System.out.println("2");
+
+		Path path = Paths.get(file.getPath());
+
+		System.out.println("3");
+
+		try {
+
+			System.out.println("4" + path);
+
+			// vem ate aqui
+
+			byte[] dados = Files.readAllBytes(path);
+
+			System.out.println("5");
+
+			return dados;
+		} catch (IOException e) {
+			System.out.println("7");
+			throw new RuntimeException(e);
+		}
 	}
 
 	@Override
