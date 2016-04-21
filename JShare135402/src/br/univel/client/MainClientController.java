@@ -12,6 +12,7 @@ import br.dagostini.jshare.comun.ClienteFX;
 import br.dagostini.jshare.comun.IServer;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Button;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 
@@ -19,6 +20,9 @@ public class MainClientController implements Initializable {
 
 	@FXML
 	private TextField nomeCliente, ipServidor, portaServidor;
+
+	@FXML
+	private Button btConectar, btDesconectar;
 
 	@FXML
 	private TableView<Arquivo> table;
@@ -52,6 +56,12 @@ public class MainClientController implements Initializable {
 			e.printStackTrace();
 		}
 
+		nomeCliente.setDisable(true);
+		ipServidor.setDisable(true);
+		portaServidor.setDisable(true);
+		btConectar.setDisable(true);
+		btDesconectar.setDisable(false);
+
 	}
 
 	@FXML
@@ -72,6 +82,12 @@ public class MainClientController implements Initializable {
 
 		registry = null;
 		servidor = null;
+
+		nomeCliente.setDisable(false);
+		ipServidor.setDisable(false);
+		portaServidor.setDisable(false);
+		btConectar.setDisable(false);
+		btDesconectar.setDisable(true);
 	}
 
 	@FXML
