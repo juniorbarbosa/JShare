@@ -44,6 +44,14 @@ public class MainServerController implements Initializable, IServer {
 	@Override
 	public void initialize(URL url, ResourceBundle rb) {
 		txtPorta.setText("1818");
+		createDiretorioUpload();
+	}
+
+	private void createDiretorioUpload() {
+		File diretorioUpload = new File("C:\\Users\\Junior\\git\\JShare\\JShare135402\\upload");
+		if (!diretorioUpload.exists()) {
+			diretorioUpload.mkdir();
+		}
 	}
 
 	@FXML
