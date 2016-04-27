@@ -43,6 +43,8 @@ public class MainClientController implements Initializable {
 	private List<Arquivo> listaArquivoUpload = new ArrayList<>();
 	private Map<Cliente, List<Arquivo>> mapArquivos = new HashMap<>();
 
+	private ClienteFX clienteFX = new ClienteFX(new Cliente());
+
 	@Override
 	public void initialize(URL url, ResourceBundle rb) {
 		nomeCliente.setText("zero");
@@ -66,7 +68,6 @@ public class MainClientController implements Initializable {
 		String porta = portaServidor.getText().trim();
 		int numeroPorta = Integer.parseInt(porta);
 
-		ClienteFX clienteFX = new ClienteFX(new Cliente());
 		clienteFX.setNome(nome);
 
 		try {
@@ -98,12 +99,11 @@ public class MainClientController implements Initializable {
 
 		String nome = nomeCliente.getText().trim();
 
-		ClienteFX clienteFx = new ClienteFX(new Cliente());
-		clienteFx.setNome(nome);
+		clienteFX.setNome(nome);
 
 		try {
 			if (servidor != null) {
-				servidor.desconectar(clienteFx.getCliente());
+				servidor.desconectar(clienteFX.getCliente());
 				servidor = null;
 			}
 		} catch (RemoteException e) {
@@ -134,17 +134,17 @@ public class MainClientController implements Initializable {
 	}
 
 	private void listaArquivosTabela() {
-		for (Map.Entry<Cliente, List<Arquivo>> entry : mapArquivos.entrySet()) {
-			Cliente cliente = entry.getKey();
-			List<Arquivo> arquivos = entry.getValue();
-			for (Arquivo arq : arquivos) {
-				ArquivoFX arquivoFX = new ArquivoFX(new Arquivo());
-				arquivoFX.setNome(arq.getNome());
-				arquivoFX.setTamanho(arq.getTamanho());
-				table.getItems().add(arquivoFX);
+		mapArquivos.keySet().stream().forEach(cliente -> {
+			if (!cliente.equals(clienteFX.getCliente())) {
+				List<Arquivo> arquivos = mapArquivos.get(cliente);
+				for (Arquivo arq : arquivos) {
+					ArquivoFX arquivoFX = new ArquivoFX(new Arquivo());
+					arquivoFX.setNome(arq.getNome());
+					arquivoFX.setTamanho(arq.getTamanho());
+					table.getItems().add(arquivoFX);
+				}
 			}
-		}
-
+		});
 	}
 
 }
