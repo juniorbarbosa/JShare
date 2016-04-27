@@ -48,6 +48,14 @@ public class MainClientController implements Initializable {
 		nomeCliente.setText("zero");
 		ipServidor.setText("127.0.0.1");
 		portaServidor.setText("1818");
+		createDiretorioDownload();
+	}
+
+	private void createDiretorioDownload() {
+		File diretorioDownload = new File("C:\\Users\\Junior\\git\\JShare\\JShare135402\\download");
+		if (!diretorioDownload.exists()) {
+			diretorioDownload.mkdir();
+		}
 	}
 
 	@FXML
