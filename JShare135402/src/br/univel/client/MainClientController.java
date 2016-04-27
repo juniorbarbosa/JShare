@@ -115,34 +115,11 @@ public class MainClientController implements Initializable {
 
 	@FXML
 	private void download() {
-		System.out.println("1");
+		ArquivoFX arquivo = table.getSelectionModel().getSelectedItem();
+		File file = new File("C:\\Users\\Junior\\git\\JShare\\JShare135402\\download\\" + arquivo.getNome());
 		try {
-			System.out.println("2");
-			
-			ArquivoFX arquivo = table.getSelectionModel().getSelectedItem();
-			
-			File arquivoFx = new File(arquivo.getNome());
-			
-			System.out.println("arquivo: " + arquivoFx.getName());
-			
-			System.out.println("3" + arquivo.getNome());
-			
-			File file = new File("C:\\Users\\Junior\\git\\JShare\\JShare135402\\download\\" + arquivoFx.getName());
-			
-			System.out.println("4" + arquivo.getNome());
-			
-			System.out.println("5" + arquivo.getNome());
-			
-			// ate aqui vem
-			
 			byte[] arquivobyte = servidor.baixarArquivo(arquivo.getArquivo());
-			
-			System.out.println("6" + arquivo.getNome());
-			
 			Files.write(Paths.get(file.getPath()), arquivobyte, StandardOpenOption.CREATE);
-			
-			System.out.println("7" + arquivo.getNome());
-			
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
