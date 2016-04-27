@@ -6,6 +6,7 @@ import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.beans.property.SimpleLongProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
+import javafx.beans.value.ChangeListener;
 
 public class ArquivoFX {
 
@@ -15,9 +16,19 @@ public class ArquivoFX {
 
     public ArquivoFX(Arquivo arquivo) {
         this.arquivo.set(arquivo);
+        initArquivoFX();
     }
 
-    public String getNome() {
+    private void initArquivoFX() {
+    	nomeProperty().addListener((ChangeListener<String>) (observable, oldValue, newValue) -> {
+			getArquivo().setNome(newValue);
+		});
+    	tamanhoProperty().addListener((ChangeListener<Number>) (observable, oldValue, newValue) -> {
+    		getArquivo().setTamanho((long) newValue);
+		});
+	}
+
+	public String getNome() {
         return nome.get();
     }
 
