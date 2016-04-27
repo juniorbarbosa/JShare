@@ -121,10 +121,6 @@ public class MainClientController implements Initializable {
 	private void desconectar() {
 		table.getItems().clear();
 
-		String nome = nomeCliente.getText().trim();
-
-		clienteFX.setNome(nome);
-
 		try {
 			if (servidor != null) {
 				servidor.desconectar(clienteFX.getCliente());
