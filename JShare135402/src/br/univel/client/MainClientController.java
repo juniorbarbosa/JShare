@@ -22,6 +22,8 @@ import br.dagostini.jshare.comun.ClienteFX;
 import br.dagostini.jshare.comun.IServer;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
@@ -63,34 +65,56 @@ public class MainClientController implements Initializable {
 	@FXML
 	private void conectar() {
 		table.getItems().clear();
+
 		String nome = nomeCliente.getText().trim();
 		String ip = ipServidor.getText().trim();
 		String porta = portaServidor.getText().trim();
-		int numeroPorta = Integer.parseInt(porta);
 
 		clienteFX.setNome(nome);
 
 		try {
-			registry = LocateRegistry.getRegistry(ip, numeroPorta);
-			IServer servico = (IServer) registry.lookup(IServer.NOME_SERVICO);
-			servico.registrarCliente(clienteFX.getCliente());
-			servico.publicarListaArquivos(clienteFX.getCliente(), listaArquivoUpload);
-			mapArquivos = servico.procurarArquivo("");
-			servidor = servico;
-		} catch (RemoteException e) {
-			e.printStackTrace();
-		} catch (NotBoundException e) {
-			e.printStackTrace();
+			if (nome.isEmpty() || ip.isEmpty() || porta.isEmpty()) {
+				Alert alert = new Alert(AlertType.INFORMATION);
+				alert.setTitle("Campos Vazios");
+				alert.setHeaderText(null);
+				alert.setContentText("Existem campos vazios. Por favor verifique.");
+
+				alert.showAndWait();
+
+				nomeCliente.setDisable(false);
+				ipServidor.setDisable(false);
+				portaServidor.setDisable(false);
+				btConectar.setDisable(false);
+				btDesconectar.setDisable(true);
+			} else {
+				int numeroPorta = Integer.parseInt(porta);
+
+				registry = LocateRegistry.getRegistry(ip, numeroPorta);
+				IServer servico = (IServer) registry.lookup(IServer.NOME_SERVICO);
+				servico.registrarCliente(clienteFX.getCliente());
+				servico.publicarListaArquivos(clienteFX.getCliente(), listaArquivoUpload);
+				mapArquivos = servico.procurarArquivo("");
+				servidor = servico;
+
+				nomeCliente.setDisable(true);
+				ipServidor.setDisable(true);
+				portaServidor.setDisable(true);
+				btConectar.setDisable(true);
+				btDesconectar.setDisable(false);
+			}
+		} catch (RemoteException | NotBoundException e) {
+			Alert alert = new Alert(Alert.AlertType.ERROR);
+			alert.setTitle("Problema de conexão");
+			alert.setHeaderText("Existem dados incorretos. Por favor verifique os dados de conexão com o servidor.");
+			if (e.getMessage() != null) {
+				String messageException = e.getMessage().replaceAll(";.*", "");
+				alert.setContentText(messageException);
+
+			}
+			alert.showAndWait();
 		}
 
 		listaArquivosTabela();
-
-		nomeCliente.setDisable(true);
-		ipServidor.setDisable(true);
-		portaServidor.setDisable(true);
-		btConectar.setDisable(true);
-		btDesconectar.setDisable(false);
-
 	}
 
 	@FXML
