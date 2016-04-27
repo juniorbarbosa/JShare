@@ -130,30 +130,12 @@ public class MainServerController implements Initializable, IServer {
 
 	@Override
 	public byte[] baixarArquivo(Arquivo arq) throws RemoteException {
-
-		System.out.println("1" + arq.getNome());
-
 		File file = new File("C:\\Users\\Junior\\git\\JShare\\JShare135402\\upload\\" + arq.getNome());
-
-		System.out.println("2");
-
 		Path path = Paths.get(file.getPath());
-
-		System.out.println("3");
-
 		try {
-
-			System.out.println("4" + path);
-
-			// vem ate aqui
-
 			byte[] dados = Files.readAllBytes(path);
-
-			System.out.println("5");
-
 			return dados;
 		} catch (IOException e) {
-			System.out.println("7");
 			throw new RuntimeException(e);
 		}
 	}
