@@ -13,6 +13,7 @@ public class MainClient extends Application {
 			Parent root = FXMLLoader.load(getClass().getResource("MainClient.fxml"));
 			Scene scene = new Scene(root, 400, 400);
 			primaryStage.setScene(scene);
+			primaryStage.setTitle("Cliente");
 			primaryStage.setMaximized(true);
 			primaryStage.show();
 		} catch (Exception e) {
