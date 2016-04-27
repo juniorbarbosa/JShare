@@ -13,8 +13,12 @@ public class MainServer extends Application {
 			Parent root = FXMLLoader.load(getClass().getResource("MainServer.fxml"));
 			Scene scene = new Scene(root, 400, 300);
 			primaryStage.setScene(scene);
-			primaryStage.show();
 			primaryStage.setTitle("Servidor");
+			primaryStage.show();
+			primaryStage.setOnCloseRequest(event -> {
+				System.exit(0);
+			});
+
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
