@@ -39,7 +39,7 @@ public class MainServerController implements Initializable, IServer {
 	private Registry registry;
 
 	private List<Cliente> listClientes = new ArrayList<>();
-	private Map<Cliente, List<Arquivo>> mapArquivos = new HashMap<>();
+	private Map<Cliente, List<Arquivo>> mapArquivosPorCliente = new HashMap<>();
 
 	@Override
 	public void initialize(URL url, ResourceBundle rb) {
@@ -89,7 +89,7 @@ public class MainServerController implements Initializable, IServer {
 	@FXML
 	protected void stopService() {
 		textArea.appendText("DESCONECTANDO TODOS OS CLIENTES.\n");
-		mapArquivos.clear();
+		mapArquivosPorCliente.clear();
 
 		try {
 			UnicastRemoteObject.unexportObject(this, true);
@@ -122,11 +122,12 @@ public class MainServerController implements Initializable, IServer {
 				arquivo.setNome(file.getName());
 				arquivo.setTamanho(file.length());
 				lista.add(arquivo);
-				mapArquivos.put(c, lista);
+				mapArquivosPorCliente.put(c, lista);
 			}
 		}
 		for (Arquivo arquivo : lista) {
-			textArea.appendText("arquivo: " + arquivo.getNome() + ", tamanho: " + arquivo.getTamanho() + "\n");
+			textArea.appendText(
+					"Arquivos Disponíveis: " + arquivo.getNome() + ", Tamanho Arquivo: " + arquivo.getTamanho() + "\n");
 		}
 
 	}
@@ -134,13 +135,13 @@ public class MainServerController implements Initializable, IServer {
 	@Override
 	public Map<Cliente, List<Arquivo>> procurarArquivo(String nome) throws RemoteException {
 		if (nome.isEmpty()) {
-			return mapArquivos;
+			return mapArquivosPorCliente;
 		} else {
 			Map<Cliente, List<Arquivo>> map = new HashMap<>();
 			List<Arquivo> lista = new ArrayList<>();
 			for (Cliente client : listClientes) {
-				mapArquivos.keySet().stream().forEach(cliente -> {
-					List<Arquivo> arquivos = map.get(cliente);
+				mapArquivosPorCliente.keySet().stream().forEach(cliente -> {
+					List<Arquivo> arquivos = mapArquivosPorCliente.get(cliente);
 					for (Arquivo arq : arquivos) {
 						Arquivo arquivo = new Arquivo();
 						arquivo.setNome(arq.getNome());
@@ -173,6 +174,7 @@ public class MainServerController implements Initializable, IServer {
 	@Override
 	public void desconectar(Cliente c) throws RemoteException {
 		listClientes.remove(c);
+		mapArquivosPorCliente.remove(c);
 		textArea.appendText("CLIENTE " + c.getNome().toUpperCase() + " DESCONECTADO.\n");
 	}
 
