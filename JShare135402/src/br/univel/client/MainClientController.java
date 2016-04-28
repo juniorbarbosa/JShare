@@ -31,10 +31,10 @@ import javafx.scene.control.TextField;
 public class MainClientController implements Initializable {
 
 	@FXML
-	private TextField nomeCliente, ipServidor, portaServidor;
+	private TextField nomeCliente, ipServidor, portaServidor, txtPesquisa;
 
 	@FXML
-	private Button btConectar, btDesconectar;
+	private Button btConectar, btDesconectar, btnPesquisa;
 
 	@FXML
 	private TableView<ArquivoFX> table;
@@ -85,6 +85,8 @@ public class MainClientController implements Initializable {
 				ipServidor.setDisable(false);
 				portaServidor.setDisable(false);
 				btConectar.setDisable(false);
+				txtPesquisa.setDisable(true);
+				btnPesquisa.setDisable(true);
 				btDesconectar.setDisable(true);
 			} else {
 				int numeroPorta = Integer.parseInt(porta);
@@ -100,6 +102,8 @@ public class MainClientController implements Initializable {
 				ipServidor.setDisable(true);
 				portaServidor.setDisable(true);
 				btConectar.setDisable(true);
+				txtPesquisa.setDisable(false);
+				btnPesquisa.setDisable(false);
 				btDesconectar.setDisable(false);
 			}
 		} catch (RemoteException | NotBoundException e) {
@@ -137,7 +141,14 @@ public class MainClientController implements Initializable {
 		ipServidor.setDisable(false);
 		portaServidor.setDisable(false);
 		btConectar.setDisable(false);
+		txtPesquisa.setDisable(true);
+		btnPesquisa.setDisable(true);
 		btDesconectar.setDisable(true);
+
+	}
+
+	@FXML
+	private void pesquisarArquivo() {
 
 	}
 
