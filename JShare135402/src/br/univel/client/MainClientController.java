@@ -95,7 +95,6 @@ public class MainClientController implements Initializable {
 				IServer servico = (IServer) registry.lookup(IServer.NOME_SERVICO);
 				servico.registrarCliente(clienteFX.getCliente());
 				servico.publicarListaArquivos(clienteFX.getCliente(), listaArquivoUpload);
-				mapArquivos = servico.procurarArquivo("");
 				servidor = servico;
 
 				nomeCliente.setDisable(true);
@@ -118,7 +117,6 @@ public class MainClientController implements Initializable {
 			alert.showAndWait();
 		}
 
-		listaArquivosTabela();
 	}
 
 	@FXML
@@ -149,33 +147,37 @@ public class MainClientController implements Initializable {
 
 	@FXML
 	private void pesquisarArquivo() {
+		table.getItems().clear();
+		String nomeArquivoPesquisa = txtPesquisa.getText().trim();
 
-	}
-
-	@FXML
-	private void download() {
-		ArquivoFX arquivo = table.getSelectionModel().getSelectedItem();
-		File file = new File("C:\\Users\\Junior\\git\\JShare\\JShare135402\\download\\" + arquivo.getNome());
 		try {
-			byte[] arquivobyte = servidor.baixarArquivo(arquivo.getArquivo());
-			Files.write(Paths.get(file.getPath()), arquivobyte, StandardOpenOption.CREATE);
-		} catch (IOException e) {
+			mapArquivos = servidor.procurarArquivo(nomeArquivoPesquisa);
+			mapArquivos.keySet().stream().forEach(cliente -> {
+				if (!cliente.equals(clienteFX.getCliente())) {
+					List<Arquivo> arquivos = mapArquivos.get(cliente);
+					for (Arquivo arq : arquivos) {
+						ArquivoFX arquivoFX = new ArquivoFX(new Arquivo());
+						arquivoFX.setNome(arq.getNome());
+						arquivoFX.setTamanho(arq.getTamanho());
+						table.getItems().add(arquivoFX);
+					}
+				}
+			});
+		} catch (RemoteException e) {
 			e.printStackTrace();
 		}
 	}
 
-	private void listaArquivosTabela() {
-		mapArquivos.keySet().stream().forEach(cliente -> {
-			if (!cliente.equals(clienteFX.getCliente())) {
-				List<Arquivo> arquivos = mapArquivos.get(cliente);
-				for (Arquivo arq : arquivos) {
-					ArquivoFX arquivoFX = new ArquivoFX(new Arquivo());
-					arquivoFX.setNome(arq.getNome());
-					arquivoFX.setTamanho(arq.getTamanho());
-					table.getItems().add(arquivoFX);
-				}
-			}
-		});
+	@FXML
+	private void download() {
+		ArquivoFX arquivoSelecionado = table.getSelectionModel().getSelectedItem();
+		File file = new File("C:\\Users\\Junior\\git\\JShare\\JShare135402\\download\\" + arquivoSelecionado.getNome());
+		try {
+			byte[] arquivobyte = servidor.baixarArquivo(arquivoSelecionado.getArquivo());
+			Files.write(Paths.get(file.getPath()), arquivobyte, StandardOpenOption.CREATE);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 
 }
