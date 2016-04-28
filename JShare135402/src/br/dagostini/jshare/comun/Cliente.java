@@ -2,6 +2,7 @@ package br.dagostini.jshare.comun;
 
 import java.beans.Transient;
 import java.io.Serializable;
+import java.util.Objects;
 
 public class Cliente implements Serializable {
 
@@ -53,6 +54,18 @@ public class Cliente implements Serializable {
 	@Transient
 	public void setClienteFX(ClienteFX clienteFX) {
 		this.clienteFX = clienteFX;
+	}
+
+	@Override
+	public boolean equals(Object outro) {
+		return outro instanceof Cliente && getNome().equals(((Cliente) outro).getNome());
+	}
+
+	@Override
+	public int hashCode() {
+		int hash = 7;
+		hash = 97 * hash + Objects.hashCode(this.nome);
+		return hash;
 	}
 
 }
