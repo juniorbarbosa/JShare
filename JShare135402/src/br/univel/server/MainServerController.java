@@ -139,22 +139,18 @@ public class MainServerController implements Initializable, IServer {
 		} else {
 			Map<Cliente, List<Arquivo>> map = new HashMap<>();
 			List<Arquivo> lista = new ArrayList<>();
-			for (Cliente client : listClientes) {
-				mapArquivosPorCliente.keySet().stream().forEach(cliente -> {
-					List<Arquivo> arquivos = mapArquivosPorCliente.get(cliente);
-					for (Arquivo arq : arquivos) {
-						Arquivo arquivo = new Arquivo();
-						arquivo.setNome(arq.getNome());
-						arquivo.setTamanho(arq.getTamanho());
-						if (arquivo.getNome().equals(nome)) {
-							if (!cliente.equals(client)) {
-								lista.add(arquivo);
-								map.put(cliente, lista);
-							}
-						}
+			mapArquivosPorCliente.keySet().stream().forEach(cliente -> {
+				List<Arquivo> arquivos = mapArquivosPorCliente.get(cliente);
+				for (Arquivo arq : arquivos) {
+					Arquivo arquivo = new Arquivo();
+					arquivo.setNome(arq.getNome());
+					arquivo.setTamanho(arq.getTamanho());
+					if (arquivo.getNome().equals(nome)) {
+						lista.add(arquivo);
+						map.put(cliente, lista);
 					}
-				});
-			}
+				}
+			});
 			return map;
 		}
 	}
