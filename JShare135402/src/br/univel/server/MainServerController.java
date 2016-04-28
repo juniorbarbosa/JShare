@@ -133,7 +133,29 @@ public class MainServerController implements Initializable, IServer {
 
 	@Override
 	public Map<Cliente, List<Arquivo>> procurarArquivo(String nome) throws RemoteException {
-		return mapArquivos;
+		if (nome.isEmpty()) {
+			return mapArquivos;
+		} else {
+			Map<Cliente, List<Arquivo>> map = new HashMap<>();
+			List<Arquivo> lista = new ArrayList<>();
+			for (Cliente client : listClientes) {
+				mapArquivos.keySet().stream().forEach(cliente -> {
+					List<Arquivo> arquivos = map.get(cliente);
+					for (Arquivo arq : arquivos) {
+						Arquivo arquivo = new Arquivo();
+						arquivo.setNome(arq.getNome());
+						arquivo.setTamanho(arq.getTamanho());
+						if (arquivo.getNome().equals(nome)) {
+							if (!cliente.equals(client)) {
+								lista.add(arquivo);
+								map.put(cliente, lista);
+							}
+						}
+					}
+				});
+			}
+			return map;
+		}
 	}
 
 	@Override
