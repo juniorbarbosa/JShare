@@ -15,6 +15,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.ResourceBundle;
+import java.util.regex.Pattern;
+
 import br.dagostini.jshare.comum.pojos.Arquivo;
 import br.dagostini.jshare.comun.Cliente;
 import br.dagostini.jshare.comun.IServer;
@@ -139,13 +141,27 @@ public class MainServerController implements Initializable, IServer {
 		} else {
 			Map<Cliente, List<Arquivo>> map = new HashMap<>();
 			List<Arquivo> lista = new ArrayList<>();
+
+			nome = nome.replaceAll("\\*", "%") + "%";
+			nome = nome.replaceAll("%+", "%");
+			String[] quotes = nome.split("%");
+			StringBuilder sbRegExp = new StringBuilder();
+			sbRegExp.append("^");
+			sbRegExp.append("(?i)");
+			for (String quote : quotes) {
+				sbRegExp.append(Pattern.quote(quote));
+				sbRegExp.append(".*");
+			}
+			sbRegExp.append("$");
+			String input = sbRegExp.toString();
+
 			mapArquivosPorCliente.keySet().stream().forEach(cliente -> {
 				List<Arquivo> arquivos = mapArquivosPorCliente.get(cliente);
 				for (Arquivo arq : arquivos) {
 					Arquivo arquivo = new Arquivo();
 					arquivo.setNome(arq.getNome());
 					arquivo.setTamanho(arq.getTamanho());
-					if (arquivo.getNome().equals(nome)) {
+					if (arquivo.getNome().matches(input)) {
 						lista.add(arquivo);
 						map.put(cliente, lista);
 					}
