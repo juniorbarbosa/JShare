@@ -2,7 +2,9 @@ package br.univel.client;
 
 import java.io.File;
 import java.io.IOException;
+import java.net.InetAddress;
 import java.net.URL;
+import java.net.UnknownHostException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
@@ -71,6 +73,8 @@ public class MainClientController implements Initializable {
 		String porta = portaServidor.getText().trim();
 
 		clienteFX.setNome(nome);
+		clienteFX.setIp(meuIp());
+		clienteFX.setPorta(1818);
 
 		try {
 			if (nome.isEmpty() || ip.isEmpty() || porta.isEmpty()) {
@@ -178,6 +182,19 @@ public class MainClientController implements Initializable {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+	}
+
+	private String meuIp() {
+		InetAddress IP;
+
+		try {
+			IP = InetAddress.getLocalHost();
+			String IPString = IP.getHostAddress();
+			return IPString;
+		} catch (UnknownHostException e) {
+			throw new RuntimeException(e);
+		}
+
 	}
 
 }
