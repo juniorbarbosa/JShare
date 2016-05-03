@@ -44,8 +44,8 @@ public class MainClientController implements Initializable {
 	private IServer servidor;
 	private Registry registry;
 
-	private List<Arquivo> listaArquivoUpload = new ArrayList<>();
 	private Map<Cliente, List<Arquivo>> mapArquivos = new HashMap<>();
+	private List<Arquivo> listaArquivoUpload = new ArrayList<>();
 
 	private ClienteFX clienteFX = new ClienteFX(new Cliente());
 
@@ -177,9 +177,14 @@ public class MainClientController implements Initializable {
 		ArquivoFX arquivoSelecionado = table.getSelectionModel().getSelectedItem();
 		File file = new File("C:\\Users\\Junior\\git\\JShare\\JShare135402\\download\\" + arquivoSelecionado.getNome());
 		try {
-			byte[] arquivobyte = servidor.baixarArquivo(arquivoSelecionado.getArquivo());
+			registry = LocateRegistry.getRegistry(clienteFX.getIp(), clienteFX.getPorta());
+			IServer servico = (IServer) registry.lookup(IServer.NOME_SERVICO);
+
+			byte[] arquivobyte = servico.baixarArquivo(arquivoSelecionado.getArquivo());
 			Files.write(Paths.get(file.getPath()), arquivobyte, StandardOpenOption.CREATE);
 		} catch (IOException e) {
+			e.printStackTrace();
+		} catch (NotBoundException e) {
 			e.printStackTrace();
 		}
 	}
